@@ -1,8 +1,8 @@
 from secrets import choice
+from tabulate import tabulate
 import string as st
 
-
-def string_generator():
+def length_input():
     # User's input validation
     while True:
         lenght = input("Number of characters: ")
@@ -11,11 +11,26 @@ def string_generator():
             break
         except ValueError:
             print("Please enter a number")
+    return lenght   
 
-    # Generate random string
+def number_input():
+    # User's input validation
+    while True:
+        number = input("Number of strings: ")
+        try:
+            number = int(number)
+            break
+        except ValueError:
+            print("Please enter a number")
+    return number   
+
+def string_generator(lenght, number):
+    # Generate random strings
     chars = st.ascii_letters + st.digits
-    string = ''.join(choice(chars) for i in range(lenght))
-    return string
+    strings = [["".join(choice(chars) for i in range(lenght))] for num in range(number)]
+    return strings
 
-string = string_generator()
-print(string)
+
+strings = string_generator(length_input(), number_input())
+headers = ["Index", "Strings"]
+print(tabulate(strings, headers = headers, tablefmt = "orgtbl", showindex = "always"))
